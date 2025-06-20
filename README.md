@@ -1,194 +1,251 @@
-# Task Manager Backend
+# Task Manager Frontend
 
-Spring Boot REST API for the Task Manager application.
+Angular 17 frontend application for the Task Manager.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Java 17+
-- Maven 3.6+
-- MySQL 8.0+
+- Node.js 18+
+- npm or yarn
 
 ### Setup
 
-1. **Database Setup**
-   ```sql
-   CREATE DATABASE task_manager;
-   ```
-
-2. **Configuration**
-   Update `src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
-   ```
-
-3. **Run Application**
+1. **Install Dependencies**
    ```bash
-   mvn spring-boot:run
+   npm install
    ```
 
-   The application will start on `http://localhost:8080`
+2. **Run Development Server**
+   ```bash
+   npm start
+   ```
 
-## 📋 API Endpoints
+   The application will start on `http://localhost:4200`
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/tasks` | Get all tasks |
-| GET | `/api/tasks/{id}` | Get task by ID |
-| POST | `/api/tasks` | Create new task |
-| PUT | `/api/tasks/{id}` | Update task |
-| DELETE | `/api/tasks/{id}` | Delete task |
+3. **Build for Production**
+   ```bash
+   npm run build
+   ```
 
-## 🔧 Features
+## 📋 Features
 
-- **RESTful API** with proper HTTP status codes
-- **Global Exception Handling** with consistent error responses
-- **Data Validation** using Bean Validation
-- **CORS Configuration** for frontend integration
-- **Swagger Documentation** at `/swagger-ui.html`
-- **Sample Data** automatically loaded on startup
+- **Responsive Design** - Works on desktop and mobile
+- **Modern UI** - Bootstrap 5 with Font Awesome icons
+- **Form Validation** - Real-time validation with error messages
+- **Loading States** - Spinners during API calls
+- **Error Handling** - User-friendly error messages
+- **Navigation** - Angular Router with navigation
+- **Status Badges** - Color-coded task status indicators
 
 ## 📁 Project Structure
 
 ```
-src/main/java/com/taskmanager/
-├── TaskManagerApplication.java    # Main application class
-├── controller/
-│   └── TaskController.java        # REST endpoints
-├── service/
-│   └── TaskService.java           # Business logic
-├── repository/
-│   └── TaskRepository.java        # Data access
-├── entity/
-│   └── Task.java                  # JPA entity
-├── dto/
-│   └── TaskDto.java               # Data transfer object
-├── enums/
-│   └── TaskStatus.java            # Task status enum
-├── exception/
-│   └── GlobalExceptionHandler.java # Error handling
-└── config/
-    └── DataInitializer.java       # Sample data loader
+src/app/
+├── app.component.ts              # Main app component
+├── app.config.ts                 # App configuration
+├── app.routes.ts                 # Routing configuration
+├── components/
+│   ├── task-list/                # Task list component
+│   ├── task-create/              # Create task component
+│   ├── task-edit/                # Edit task component
+│   └── task-detail/              # Task detail component
+├── services/
+│   └── task.service.ts           # API service
+└── models/
+    └── task.model.ts             # Task interface
 ```
 
-## 🗄️ Database Schema
+## 🎨 Pages
 
-The `Task` entity includes:
-- `id` - Primary key
-- `title` - Task title (required)
-- `description` - Task description (optional)
-- `status` - Task status (TODO, IN_PROGRESS, DONE)
-- `dueDate` - Due date (optional)
-- `createdAt` - Creation timestamp
-- `updatedAt` - Last update timestamp
+### Home Page (`/tasks`)
+- Displays all tasks in card layout
+- Each card shows title, description, status, and due date
+- Action buttons for view, edit, and delete
+- Create new task button
+- Empty state when no tasks exist
 
-## 🔍 API Examples
+### Create Task (`/tasks/create`)
+- Reactive form for creating new tasks
+- Form validation with error messages
+- Required fields: title and status
+- Optional fields: description and due date
+- Cancel and submit buttons
 
-### Create Task
-```bash
-curl -X POST http://localhost:8080/api/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "New Task",
-    "description": "Task description",
-    "status": "TODO",
-    "dueDate": "2024-01-15T10:00:00"
-  }'
-```
+### Edit Task (`/tasks/:id/edit`)
+- Pre-populated form with existing task data
+- Same validation as create form
+- Updates existing task on submit
+- Navigation to task detail after save
 
-### Get All Tasks
-```bash
-curl http://localhost:8080/api/tasks
-```
-
-### Update Task
-```bash
-curl -X PUT http://localhost:8080/api/tasks/1 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Updated Task",
-    "status": "IN_PROGRESS"
-  }'
-```
-
-### Delete Task
-```bash
-curl -X DELETE http://localhost:8080/api/tasks/1
-```
-
-## 🛠️ Development
-
-### Building
-```bash
-mvn clean compile
-```
-
-### Testing
-```bash
-mvn test
-```
-
-### Packaging
-```bash
-mvn clean package
-```
-
-### Running with JAR
-```bash
-java -jar target/task-manager-backend-0.0.1-SNAPSHOT.jar
-```
+### Task Detail (`/tasks/:id`)
+- Detailed view of a single task
+- Shows all task information
+- Action buttons for edit and delete
+- Navigation back to task list
 
 ## 🔧 Configuration
 
-### Application Properties
-- **Database**: MySQL with auto-creation
-- **JPA**: Hibernate with SQL logging
-- **Server**: Port 8080
-- **CORS**: Enabled for localhost:4200
-- **Swagger**: Available at `/swagger-ui.html`
+### API Configuration
+The frontend connects to the Spring Boot backend at `http://localhost:8080/api`.
 
-### Environment Variables
-You can override properties using environment variables:
+### Styling
+- **Bootstrap 5** - Main CSS framework
+- **Font Awesome** - Icons
+- **Custom CSS** - Additional styling in `styles.css`
+
+### Environment
+- **Development**: `http://localhost:4200`
+- **API Base URL**: `http://localhost:8080/api`
+- **CORS**: Configured for backend integration
+
+## 🛠️ Development
+
+### Available Commands
+
 ```bash
-export SPRING_DATASOURCE_USERNAME=myuser
-export SPRING_DATASOURCE_PASSWORD=mypassword
-export SERVER_PORT=8081
+# Development server
+npm start
+
+# Build for production
+npm run build
+
+# Watch mode
+npm run watch
+
+# Run tests
+npm test
 ```
 
-## 📊 Sample Data
+### Code Structure
 
-The application automatically loads sample tasks on first startup:
-1. Complete Project Documentation (IN_PROGRESS)
-2. Review Code Changes (TODO)
-3. Deploy to Production (DONE)
-4. Update Dependencies (TODO)
+#### Components
+All components are standalone and use:
+- **Reactive Forms** for form handling
+- **Angular Router** for navigation
+- **Bootstrap** for styling
+- **Font Awesome** for icons
+
+#### Services
+- **TaskService** - Handles all API communication
+- **HTTP Client** - For REST API calls
+- **Error Handling** - Consistent error management
+
+#### Models
+- **Task Interface** - TypeScript interface for task data
+- **TaskStatus Enum** - Enum for task status values
+
+## 🎯 Key Features
+
+### Form Validation
+- Required field validation
+- Real-time error messages
+- Form state management
+- Submit button disabled when invalid
+
+### Loading States
+- Spinner during API calls
+- Loading text on buttons
+- Disabled forms during submission
+
+### Error Handling
+- User-friendly error messages
+- Alert components for errors
+- Console logging for debugging
+
+### Responsive Design
+- Mobile-first approach
+- Bootstrap grid system
+- Responsive cards and forms
+- Touch-friendly buttons
+
+## 🔍 API Integration
+
+### TaskService Methods
+```typescript
+getAllTasks(): Observable<Task[]>
+getTaskById(id: number): Observable<Task>
+createTask(task: Task): Observable<Task>
+updateTask(id: number, task: Task): Observable<Task>
+deleteTask(id: number): Observable<void>
+```
+
+### Error Handling
+- HTTP error responses
+- Network connectivity issues
+- Validation errors
+- User confirmation for destructive actions
+
+## 🎨 UI Components
+
+### Status Badges
+- **TODO**: Yellow badge
+- **IN_PROGRESS**: Blue badge
+- **DONE**: Green badge
+
+### Cards
+- Hover effects
+- Action buttons
+- Truncated descriptions
+- Date formatting
+
+### Forms
+- Bootstrap form styling
+- Validation feedback
+- Loading states
+- Responsive layout
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Database Connection**
-   - Ensure MySQL is running
-   - Check credentials in application.properties
-   - Verify database exists
+1. **API Connection Error**
+   - Ensure backend is running on port 8080
+   - Check CORS configuration
+   - Verify API endpoints
 
-2. **Port Already in Use**
-   - Change server.port in application.properties
-   - Or use: `mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=8081`
+2. **Build Errors**
+   - Clear node_modules and reinstall
+   - Check Angular version compatibility
+   - Verify TypeScript configuration
 
-3. **CORS Issues**
-   - Backend CORS is configured for http://localhost:4200
-   - Ensure frontend is running on correct port
+3. **Styling Issues**
+   - Ensure Bootstrap is properly imported
+   - Check Font Awesome CDN
+   - Verify custom CSS imports
+
+4. **Routing Issues**
+   - Check route configuration
+   - Verify component imports
+   - Ensure proper navigation
 
 ## 📚 Dependencies
 
-- **Spring Boot 3.2.0** - Main framework
-- **Spring Data JPA** - Database operations
-- **MySQL Connector** - Database driver
-- **Lombok** - Reduces boilerplate
-- **ModelMapper** - Object mapping
-- **SpringDoc OpenAPI** - Swagger documentation
+- **Angular 17** - Main framework
+- **Bootstrap 5** - UI framework
+- **Font Awesome** - Icons
+- **RxJS** - Reactive programming
+- **TypeScript** - Language
+
+## 🔧 Development Tips
+
+### Adding New Features
+1. Create new component in `components/` folder
+2. Add route in `app.routes.ts`
+3. Update navigation in `app.component.ts`
+4. Add service methods if needed
+5. Update models if required
+
+### Styling Guidelines
+- Use Bootstrap classes when possible
+- Add custom CSS in `styles.css`
+- Follow mobile-first approach
+- Use consistent spacing and colors
+
+### Code Organization
+- Keep components focused and small
+- Use services for API calls
+- Implement proper error handling
+- Follow Angular best practices
 
 ## 📄 License
 
